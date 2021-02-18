@@ -47,13 +47,15 @@ class Chat extends StatelessWidget {
               Icons.info,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              chatController.openRoomChatProfile();
+            },
           ),
         ],
       ),
       backgroundColor: Colors.black87,
       body: Container(
-        padding: EdgeInsets.all(8),
+        //spadding: EdgeInsets.only(left: 8, right: 8),
         child: Column(
           children: [
             Expanded(

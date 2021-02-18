@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:quickmessage/models/message.dart';
 import 'package:quickmessage/models/room.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:quickmessage/screens/profile.dart';
 
 class ChatController extends GetxController{
 
@@ -36,6 +37,10 @@ class ChatController extends GetxController{
       print('Failed to send message'+ error.toString()),
       Get.snackbar("ERROR", "Failed to send message"),
     });
+  }
+
+  void openRoomChatProfile(){
+    Get.to(Profile(),arguments: room.value);
   }
 
 }

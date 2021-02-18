@@ -14,8 +14,10 @@ class HomeController extends GetxController {
   Rx<Message> testMessage = Message(content: "nhan duc").obs;
 
   HomeController() {
-    print("Init HomeController");
+    print("Init HomeController: ");
   }
+
+  //todo: try to not use obs => clear obs
 
   onInit() {
     _getAllUserChat();
@@ -28,6 +30,7 @@ class HomeController extends GetxController {
     userChats = [];
     snapshot.docs.forEach((doc) {
       print(doc["name"]);
+      // print(doc["picture"]);
       if (doc.id == FirebaseAuth.instance.currentUser.uid) {
         currentUser.update((value) => {
               value.uid = FirebaseAuth.instance.currentUser.uid,

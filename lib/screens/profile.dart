@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quickmessage/controllers/profileController.dart';
-// import 'package:quickmessage/widgets/itemProfile.dart';
 import 'package:get/get.dart';
 
 class Profile extends StatelessWidget {
@@ -42,11 +41,10 @@ class Profile extends StatelessWidget {
                   CircleAvatar(
                     radius: 80,
                     backgroundColor: Colors.transparent,
-                    child: ClipOval(
-                      child: Image.network(
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlNyI5Bbsl1vq1BQjH9XA-Z4j0Kkk0cEpAnA&usqp=CAU",
-                      ),
-                    ),
+                    backgroundImage: NetworkImage(controller.room.urlPicture),
+                    // backgroundImage: NetworkImage(
+                    //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlNyI5Bbsl1vq1BQjH9XA-Z4j0Kkk0cEpAnA&usqp=CAU",
+                    //     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 110, left: 110),

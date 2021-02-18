@@ -18,8 +18,7 @@ class SignUpController extends GetxController{
       );
       await fireStore.collection("users").doc(userCredential.user.uid).set({
         'name': name,
-        'picture': 'http://',
-        'rooms': []
+        'picture': 'http://'
       });
       Get.snackbar('HI','SIGNUP SUCCESS');
       Get.back();   //Back to login screen

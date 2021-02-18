@@ -58,7 +58,7 @@ class _TestWidgetState extends State<TestWidget> {
       body: Column(
         // mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(child: ListMessage(messages,currentUserUid,userChatUid)),
+          Expanded(child: ListMessage(messages,currentUserUid,userChatUid,"")),
           BottomBarChat(),
         ],
 

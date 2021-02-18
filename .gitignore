@@ -40,4 +40,4 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-*.json
+android/app/google-services.json

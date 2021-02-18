@@ -21,12 +21,7 @@ class ChatController extends GetxController{
     this.room.value = room;
   }
 
-  // onInit(){
-  //   super.onInit();
-  // }
-
   pushMessage(String content) async {
-    ///haha
     int time = DateTime.now().microsecondsSinceEpoch;
     print(time);
     await FirebaseFirestore.instance.collection("rooms").doc(room.value.id).collection("messages").add({

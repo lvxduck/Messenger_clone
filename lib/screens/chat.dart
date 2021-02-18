@@ -1,31 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:quickmessage/controllers/chatController.dart';
-import 'package:quickmessage/controllers/homeController.dart';
-import 'package:quickmessage/models/message.dart';
-import 'package:quickmessage/models/room.dart';
 import 'package:quickmessage/widgets/bottomBarChat.dart';
 import 'package:quickmessage/widgets/listMessage.dart';
 import 'package:quickmessage/widgets/myLoading.dart';
 
-// class Chat extends StatefulWidget {
-//   @override
-//   _ChatState createState() => _ChatState();
-// }
-//
-// class _ChatState extends State<Chat> {
 class Chat extends StatelessWidget {
-  // final Room room = Get.arguments;
-  // final ChatController chatController = Get.put(ChatController(Get.arguments));
 
   @override
   Widget build(BuildContext context) {
-    // print("hehehe"+Get.arguments.toString());
     final ChatController chatController =
         Get.put(ChatController(Get.arguments));
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black87,

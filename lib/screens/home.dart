@@ -4,47 +4,12 @@ import 'package:quickmessage/controllers/homeController.dart';
 import 'package:quickmessage/models/user.dart';
 import 'package:quickmessage/widgets/itemUserChat.dart';
 
-// class Home extends StatefulWidget {
-//   @override
-//   _HomeState createState() => _HomeState();
-// }
-
-// class _HomeState extends State<Home> with StatelessWidget{
 class Home extends StatelessWidget {
-  //
-  // @override
-  // void initState() {
-  //   print("Build Home initState");
-  //   super.initState();
-  //   WidgetsBinding.instance.addObserver(this);
-  // }
-  //
-  // @override
-  // void dispose() {
-  //   WidgetsBinding.instance.removeObserver(this);
-  //   super.dispose();
-  // }
-  //
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   if(state == AppLifecycleState.resumed){
-  //     print("resume");
-  //     // user returned to our app
-  //   }else if(state == AppLifecycleState.inactive){
-  //     // app is inactive
-  //   }else if(state == AppLifecycleState.paused){
-  //     // user is about quit our app temporally
-  //   }
-  // }
+
 
   @override
   Widget build(BuildContext context) {
-    // final HomeController controller = Get.put(HomeController());
-     final HomeController controller = Get.put(HomeController());
-
-    print("Build Home");
-    // controller.restart();
-
+    final HomeController controller = Get.put(HomeController());
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -55,18 +20,15 @@ class Home extends StatelessWidget {
             },
           ),
         ],
-        // leading: FlatButton(
-        //   child: Icon(
-        //     Icons.arrow_back,
-        //     color: Colors.white,
-        //   ),
-        //   onPressed: () {
-        //     //controller.dispose();
-        //     //controller.onClose();
-        //     //controller.onInit();
-        //     Get.back();
-        //   },
-        // ),
+        leading: FlatButton(
+          child: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
       ),
       body: Container(
         padding: EdgeInsets.all(8),

@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickmessage/models/message.dart';
 import 'package:quickmessage/models/room.dart';
 import 'package:quickmessage/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import '../screens/chat.dart';
 
 class HomeController extends GetxController {
@@ -23,14 +21,6 @@ class HomeController extends GetxController {
     _getAllUserChat();
     _getCurrentUser();
     super.onInit();
-  }
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    print("Close Home controller");
-
-    super.onClose();
   }
 
   void _getAllUserChat() async {

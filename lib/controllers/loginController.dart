@@ -19,20 +19,6 @@ class LoginController extends GetxController{
     super.onInit();
   }
 
-  // LoginController(){
-  //   // count+=1;
-  //   // print("Chay lan thu: $count");
-  //   // FirebaseAuth.instance.authStateChanges().listen((User user) {
-  //   //   if (user == null) {
-  //   //     print('User is currently signed out!');
-  //   //   } else {
-  //   //     print('User is signed in!');
-  //   //     Get.to(Home());
-  //   //     // Get.to(Home());
-  //   //   }
-  //   // });
-  // }
-
   void login(String email, String password) async {
     print("LOGIN"+email+password);
     isLogin.value = true;

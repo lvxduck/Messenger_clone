@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickmessage/controllers/homeController.dart';
+import 'package:quickmessage/models/room.dart';
 import 'package:quickmessage/models/user.dart';
 import 'package:quickmessage/widgets/itemUserChat.dart';
 
@@ -19,12 +20,15 @@ class Home extends StatelessWidget {
           onPressed: () {
             controller.openSetting();
           },
-          child: CircleAvatar(
-            radius: 18,
-            backgroundColor: Colors.transparent,
-            child: ClipOval(
-              child: Image.network(
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlNyI5Bbsl1vq1BQjH9XA-Z4j0Kkk0cEpAnA&usqp=CAU"),
+          child: Padding(
+            padding: EdgeInsets.only(left: 18),
+            child: CircleAvatar(
+              radius: 18,
+              backgroundColor: Colors.transparent,
+              child: ClipOval(
+                child: Image.network(
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlNyI5Bbsl1vq1BQjH9XA-Z4j0Kkk0cEpAnA&usqp=CAU"),
+              ),
             ),
           ),
         ),
@@ -44,9 +48,9 @@ class Home extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: controller.currentUser.value.rooms.length,
                         itemBuilder: (context, index) {
+                          Room room = controller.currentUser.value.rooms[index];
                           return itemUserChat(
-                            urlPicture: controller.currentUser.value.rooms[index].urlPicture,
-                            name: controller.currentUser.value.rooms[index].name,
+                            room: room,
                             onClick: () {
                               controller.openChatRoom(index);
                             },
@@ -94,11 +98,11 @@ class Home extends StatelessWidget {
             Padding(padding: EdgeInsets.only(left: 10)),
             Text(
               "Search",
-              style: TextStyle(color: Colors.white30, fontSize: 16),
+              style: TextStyle(color: Colors.white54, fontSize: 16),
             )
           ],
         ),
-        color: Colors.white10,
+        color: Colors.white12,
         shape: new RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(30.0),
         ),

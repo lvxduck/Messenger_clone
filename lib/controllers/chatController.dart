@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:quickmessage/controllers/homeController.dart';
 import 'package:quickmessage/models/message.dart';
 import 'package:quickmessage/models/room.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,7 +33,9 @@ class ChatController extends GetxController{
     }).then((value) => {
       room.update((val) {
         val.messages.add(Message(content: content, time: time, uid: uid));
-      })
+      }),
+      //Update homeScreen
+      Get.find<HomeController>().currentUser.update((val) { }),
     }).catchError((error) => {
       print('Failed to send message'+ error.toString()),
       Get.snackbar("ERROR", "Failed to send message"),

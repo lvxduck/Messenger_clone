@@ -10,6 +10,7 @@ Widget itemUserChat(
   return FlatButton(
     padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
     onPressed: onClick,
+    splashColor: Colors.white10,
     child: Container(
       height: 60,
       padding: EdgeInsets.only(top: 4),

@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 
-class MyTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hintText;
+Widget myTextField(TextEditingController controller,String hintText){
+  return TextField(
+    controller: controller,
+    style: TextStyle(fontSize: 18, color: Colors.white),
+    decoration: InputDecoration(
+      border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(80)),
+      isDense: true,
+      fillColor: Colors.white10,
+      filled: true,
+      contentPadding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+      hintStyle: TextStyle(fontSize: 18, color: Colors.white),
+      hintText: hintText,
+    ),
+  );
+}
 
-  MyTextField(this.controller, this.hintText);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(80)),
-        isDense: true,
-        fillColor: Colors.blue[200],
-        filled: true,
-        contentPadding: EdgeInsets.all(12),
-        hintStyle: TextStyle(fontSize: 18, color: Colors.white),
-        hintText: hintText,
-      ),
-    );
-  }
+Widget myFlatButton({onPressed, String content}){
+  return FlatButton(
+    minWidth: 200,
+    height: 42,
+    child: Text(content, style: TextStyle(color: Colors.white),),
+    onPressed: onPressed,
+    color: Colors.lightBlue[700],
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(40),
+    ),
+  );
 }

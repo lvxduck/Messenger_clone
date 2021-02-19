@@ -4,6 +4,7 @@ import 'package:quickmessage/models/message.dart';
 import 'package:quickmessage/models/room.dart';
 import 'package:quickmessage/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:quickmessage/screens/setting.dart';
 import '../screens/chat.dart';
 
 class HomeController extends GetxController {
@@ -152,6 +153,10 @@ class HomeController extends GetxController {
 
   void openChatRoom(int index) {
     Get.to(Chat(), arguments: currentUser.value.rooms[index]);
+  }
+
+  void openSetting(){
+    Get.to(Setting());
   }
 
   List<UserChat> searchUser(String query) {

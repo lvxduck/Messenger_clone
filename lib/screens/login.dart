@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickmessage/controllers/loginController.dart';
@@ -7,35 +8,64 @@ import 'package:quickmessage/widgets/myTextField.dart';
 class Login extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
   final LoginController controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black87,
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 24),
+        padding: EdgeInsets.symmetric(horizontal: 56),
         child: Center(
           child: Stack(
             alignment: AlignmentDirectional.center,
             children: [
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MyTextField(emailController, "Email"),
-                  MyTextField(passwordController, "Password"),
-                  RaisedButton(
-                      child: Text("LOGIN"),
-                      onPressed: () => controller.login(
-                          emailController.text, passwordController.text)),
-                  RaisedButton(
-                    child: Text("SIGNUP"),
-                    onPressed: () => controller.signUp(),
-                  )
+                  Column(
+                    children: [
+                      Padding(padding: EdgeInsets.only(top: 120)),
+                      Text("Hi,", style: TextStyle(color: Colors.lightBlue[700], fontSize: 32, fontWeight: FontWeight.bold)),
+                      Text("Login to connect your friends", style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      myTextField(emailController, "Email"),
+                      Padding(padding: EdgeInsets.only(top: 16)),
+                      myTextField(passwordController, "Password"),
+                      Padding(padding: EdgeInsets.only(top: 16)),
+                      myFlatButton(
+                        onPressed: () => controller.login(emailController.text, passwordController.text),
+                        content: "LOGIN",
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 2, top: 32),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "New user?",
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            controller.signUp();
+                          },
+                          child: Text(
+                            "Signup now",
+                            style: TextStyle(color: Colors.lightBlue[700], fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              Obx(() => controller.isLogin.value?MyLoading():Container())
+              Obx(() => controller.isLogin.value ? MyLoading() : Container())
             ],
           ),
         ),

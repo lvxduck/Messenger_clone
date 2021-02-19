@@ -16,12 +16,12 @@ class Home extends StatelessWidget {
         title: getTitle(),
         leading: FlatButton(
           padding: EdgeInsets.all(0),
-          onPressed: () {},
+          onPressed: () {
+            controller.openSetting();
+          },
           child: CircleAvatar(
             radius: 18,
             backgroundColor: Colors.transparent,
-            // backgroundImage: NetworkImage(
-            //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlNyI5Bbsl1vq1BQjH9XA-Z4j0Kkk0cEpAnA&usqp=CAU"),
             child: ClipOval(
               child: Image.network(
                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlNyI5Bbsl1vq1BQjH9XA-Z4j0Kkk0cEpAnA&usqp=CAU"),

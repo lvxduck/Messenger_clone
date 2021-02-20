@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
     final HomeController controller = Get.put(HomeController());
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar:  AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
         title: getTitle(),
@@ -119,7 +119,6 @@ class Home extends StatelessWidget {
   }
 }
 
-
 class Search extends SearchDelegate<String> {
   HomeController controller = Get.find<HomeController>();
 
@@ -131,7 +130,9 @@ class Search extends SearchDelegate<String> {
     return ThemeData(
       primaryColor: Colors.black,
       hintColor: Colors.white,
-      inputDecorationTheme: InputDecorationTheme(hintStyle: TextStyle(color: Colors.white24),),
+      inputDecorationTheme: InputDecorationTheme(
+        hintStyle: TextStyle(color: Colors.white24),
+      ),
       textTheme: TextTheme(
         headline6: TextStyle(
           color: Colors.white,
@@ -165,8 +166,7 @@ class Search extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container(
-    );
+    return Container();
   }
 
   @override
@@ -180,9 +180,11 @@ class Search extends SearchDelegate<String> {
       child: ListView.builder(
         itemCount: suggestionList.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(suggestionList[index].name, style: TextStyle(color: Colors.white),),
-            onTap: () async {
+          return itemUserChatForSearch(
+            name: suggestionList[index].name,
+            urlPicture: suggestionList[index].urlPicture,
+            isConnected: true,
+            onClick: (){
               controller.createOrOpenNewRoom(suggestionList[index]);
             },
           );

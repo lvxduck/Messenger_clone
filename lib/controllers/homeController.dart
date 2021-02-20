@@ -80,7 +80,6 @@ class HomeController extends GetxController {
     currentUser.update((val) {
       val.rooms = rooms;
     });
-    // currentUser.value.rooms = rooms;
   }
 
   void hardReload() async {
@@ -185,7 +184,7 @@ class HomeController extends GetxController {
   }
 
   void openChatRoom(int index) {
-    Get.to(Chat(), arguments: currentUser.value.rooms[index]);
+    Get.to(Chat(), arguments: {'room': currentUser.value.rooms[index], 'index': index});
   }
 
   void openSetting() {

@@ -9,12 +9,14 @@ import 'package:quickmessage/screens/profile.dart';
 
 class ChatController extends GetxController{
 
+  int _roomIndex;
   Rx<Room> room = Room().obs;
   final uid = FirebaseAuth.instance.currentUser.uid;
 
-  ChatController(Room room){
-    print("inti chat room" + room.toString());
-    this.room.value = room;
+  ChatController(data){
+    print("inti chat room");
+    this.room.value = data['room'];
+    _roomIndex = data['index'];
   }
 
   void backToHome(){
@@ -42,7 +44,7 @@ class ChatController extends GetxController{
   }
 
   void openRoomChatProfile(){
-    Get.to(Profile(),arguments: room.value);
+    Get.to(Profile(),arguments: {'room': room.value, 'index': _roomIndex});
   }
 
 }

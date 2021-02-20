@@ -1,14 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:quickmessage/controllers/homeController.dart';
 import 'package:quickmessage/models/room.dart';
 import 'package:quickmessage/models/user.dart';
+import 'package:quickmessage/screens/home.dart';
 
 class ProfileController extends GetxController {
   Room room;
+  int _roomIndex;
   bool isLoading = false;
 
-  ProfileController(this.room);
+  ProfileController(data){
+    room = data['room'];
+    _roomIndex = data['index'];
+  }
 
   void selectImageProfile() {
     print("selectImageProfile");
@@ -46,6 +52,17 @@ class ProfileController extends GetxController {
     await FirebaseFirestore.instance.collection('rooms').doc(room.id).delete().catchError((e) => {
           Get.rawSnackbar(title: "Ops", message: "Can't delete this conversation", snackPosition: SnackPosition.TOP),
         });
+
+    ///Delete room in userChat.rooms
+    Get.find<HomeController>().currentUser.update((val) {
+      val.rooms.removeAt(_roomIndex);
+    });
+
+    ///Back to homeScreen
+    Get.back();
+    Get.back();
+    isLoading = false;
+    update();
   }
 
   void settingTheme() {

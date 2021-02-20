@@ -39,8 +39,7 @@ class HomeController extends GetxController {
               value.urlPicture = doc["picture"],
             });
       }
-      userChats.add(
-          UserChat(uid: doc.id, name: doc["name"], urlPicture: doc["picture"]));
+      userChats.add(UserChat(uid: doc.id, name: doc["name"], urlPicture: doc["picture"]));
     });
   }
 
@@ -56,10 +55,7 @@ class HomeController extends GetxController {
               snapshot.docs.forEach((doc) {
                 print(doc['id']);
                 rooms.add(Room(
-                    id: doc['id'],
-                    name: doc['name'],
-                    urlPicture: doc['picture'],
-                    userChatUid: doc['userChatUid']));
+                    id: doc['id'], name: doc['name'], urlPicture: doc['picture'], userChatUid: doc['userChatUid']));
               }),
 
               /// Get room message, store in room collection
@@ -75,9 +71,7 @@ class HomeController extends GetxController {
                           messageSnapshot.docs.forEach((messageDoc) {
                             // print(messageDoc['content']);
                             messages.add(Message(
-                                content: messageDoc['content'],
-                                time: messageDoc['time'],
-                                uid: messageDoc['uid']));
+                                content: messageDoc['content'], time: messageDoc['time'], uid: messageDoc['uid']));
                           })
                         });
                 room.messages = messages;
@@ -89,11 +83,47 @@ class HomeController extends GetxController {
     // currentUser.value.rooms = rooms;
   }
 
+  void hardReload() async {
+    List<Room> rooms = [];
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .collection('rooms')
+        .get()
+        .then(
+          (snapshot) => {
+            snapshot.docs.forEach(
+              (doc) {
+                print(doc['id']);
+                FirebaseFirestore.instance.collection("users").doc(doc['userChatUid']).get().then(
+                      (userChat) => {
+                        rooms.add(
+                          Room(
+                            id: doc['id'],
+                            name: userChat['name'],
+                            urlPicture: userChat['picture'],
+                            userChatUid: doc['userChatUid'],
+                          ),
+                        )
+                      },
+                    );
+              },
+            ),
+          },
+        );
+    currentUser.update((val) {
+      val.rooms = rooms;
+    });
+  }
+
   void createOrOpenNewRoom(UserChat userChat) async {
     recentUser.insert(0, userChat);
     if (recentUser.length > 5) recentUser.removeLast();
 
-    if (!checkRoomExit(userChat)) {
+    int roomPos = checkRoomExit(userChat);
+    if (roomPos == -1) {
+      print(" Create room");
+
       /// Create room
       await FirebaseFirestore.instance
           .collection("rooms")
@@ -105,30 +135,32 @@ class HomeController extends GetxController {
                 Get.snackbar("ERROR", "Failed to add room"),
               })
           .then((room) => {
-                // Add room to currentUser DB
+                /// Add room to currentUser DB
                 FirebaseFirestore.instance
                     .collection("users")
                     .doc(FirebaseAuth.instance.currentUser.uid)
                     .collection('rooms')
-                    .add({
+                    .doc(room.id)
+                    .set({
                       'id': room.id,
                       'name': userChat.name,
                       'picture': userChat.urlPicture,
                       'userChatUid': userChat.uid
                     })
                     .then((value) => {
-                          // Add room to userChat DB
+                          /// Add room to userChat DB
                           FirebaseFirestore.instance
                               .collection("users")
                               .doc(userChat.uid)
                               .collection('rooms')
-                              .add({
+                              .doc(room.id)
+                              .set({
                             'id': room.id,
                             'name': currentUser.value.name,
                             'picture': currentUser.value.urlPicture,
                             'userChatUid': currentUser.value.uid
                           }).then((value) => {
-                                    // add room to currentUser
+                                    /// add room to currentUser
                                     currentUser.update((val) {
                                       val.rooms.add(Room(
                                           id: room.id,
@@ -137,10 +169,8 @@ class HomeController extends GetxController {
                                           userChatUid: userChat.uid,
                                           messages: []));
                                     }),
-                                    print(
-                                        currentUser.value.rooms[0].toString()),
-                                    openChatRoom(
-                                        currentUser.value.rooms.length - 1),
+                                    print(currentUser.value.rooms[0].toString()),
+                                    openChatRoom(currentUser.value.rooms.length - 1),
                                   }),
                         })
                     .catchError((error) => {
@@ -148,6 +178,9 @@ class HomeController extends GetxController {
                           Get.snackbar("ERROR", "Failed to add room"),
                         }),
               });
+    } else {
+      print("Room is exit");
+      openChatRoom(roomPos);
     }
   }
 
@@ -155,23 +188,24 @@ class HomeController extends GetxController {
     Get.to(Chat(), arguments: currentUser.value.rooms[index]);
   }
 
-  void openSetting(){
-    Get.to(Setting());
+  void openSetting() {
+    Get.to(Setting(), arguments: currentUser.value);
   }
 
   List<UserChat> searchUser(String query) {
     List<UserChat> suggestionList = [];
     query.isEmpty
         ? suggestionList = recentUser
-        : suggestionList
-            .addAll(userChats.where((element) => element.name.contains(query)));
+        : suggestionList.addAll(userChats.where((element) => element.name.toLowerCase().contains(query.toLowerCase())));
     return suggestionList;
   }
 
-  bool checkRoomExit(UserChat userChat) {
-    currentUser.value.rooms.forEach((e) {
-      if (e.userChatUid == userChat.uid) return true;
-    });
-    return false;
+  int checkRoomExit(UserChat userChat) {
+    for (int i = 0; i < currentUser.value.rooms.length; i++) {
+      if (currentUser.value.rooms[i].userChatUid == userChat.uid) {
+        return i;
+      }
+    }
+    return -1;
   }
 }

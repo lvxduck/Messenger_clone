@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quickmessage/controllers/settingController.dart';
 import 'package:get/get.dart';
+import 'package:quickmessage/widgets/myLoading.dart';
+import 'package:quickmessage/widgets/myTextField.dart';
 
 class Setting extends StatelessWidget {
-
-  final SettingController controller = Get.put(SettingController());
-
+  final TextEditingController nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,64 +15,99 @@ class Setting extends StatelessWidget {
         backgroundColor: Colors.black87,
         title: Text("Me"),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              Stack(
-                alignment: AlignmentDirectional.bottomEnd,
+      body: GetBuilder<SettingController>(
+        init: SettingController(Get.arguments),
+        builder: (_) => _.currentUser == null
+            ? Container()
+            : Stack(
+                alignment: AlignmentDirectional.center,
                 children: [
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundColor: Colors.transparent,
-                    // backgroundImage: NetworkImage(controller.room.urlPicture),
-                    backgroundImage: NetworkImage(
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlNyI5Bbsl1vq1BQjH9XA-Z4j0Kkk0cEpAnA&usqp=CAU",
+                  SingleChildScrollView(
+                    child: Container(
+                      child: Column(
+                        children: [
+                          Stack(
+                            alignment: AlignmentDirectional.bottomEnd,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(200),
+                                child: _.image == null
+                                    ? Image.network(
+                                        _.currentUser.urlPicture,
+                                        height: 120,
+                                        width: 120,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Image.file(
+                                        _.image,
+                                        height: 120,
+                                        width: 120,
+                                        fit: BoxFit.cover,
+                                      ),
+                              ),
+                              FlatButton(
+                                padding: EdgeInsets.all(0),
+                                onPressed: () {
+                                  // print("selectImage");
+                                  _.selectImage();
+                                },
+                                child: Container(
+                                  width: 120,
+                                  margin: EdgeInsets.only(top: 20),
+                                  height: 30,
+                                  color: Colors.black38,
+                                  child: Icon(
+                                    Icons.photo_camera,
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          Container(
+                            alignment: AlignmentDirectional.center,
+                            padding: EdgeInsets.only(right: 32),
+                            height: 90,
+                            width: 260,
+                            // color: Colors.red,
+                            child: TextField(
+                              controller: nameController,
+                              style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w500),
+                              // cursorColor: Colors.,
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                hintText: _.currentUser.name,
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w500),
+                                isDense: true,
+                                icon: Icon(
+                                  Icons.edit,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          settingItem(
+                              content: "Dark Mode",
+                              icon: Icons.brightness_2_sharp,
+                              color: Colors.white30,
+                              switchVal: true),
+                          settingItem(content: "Switch Account", icon: Icons.switch_account, color: Colors.purple),
+                          settingItem(content: "Message Requests", icon: Icons.message, color: Colors.blue),
+                          settingItem(
+                              content: "Log out", icon: Icons.logout, color: Colors.green, onPressed: () => _.logOut()),
+                          myFlatButton(
+                              onPressed: () {
+                                _.updateData(nameController.text);
+                              },
+                              content: "Update"),
+                        ],
+                      ),
                     ),
                   ),
-                  Container(
-                    width: 120,
-                    margin: EdgeInsets.only(top: 20),
-                    height: 30,
-                    color: Colors.black38,
-                    child: Icon(
-                      Icons.photo_camera,
-                      color: Colors.white70,
-                    ),
-                  )
+                  if (_.isUpDating == true) MyLoading(),
                 ],
               ),
-              Container(
-                alignment: AlignmentDirectional.center,
-                padding: EdgeInsets.only(right: 32),
-                height: 90,
-                width: 260,
-                // color: Colors.red,
-                child: TextField(
-                  style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w500),
-                  // cursorColor: Colors.,
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    hintText: "Le duc",
-                    border: InputBorder.none,
-                    hintStyle: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w500),
-                    isDense: true,
-                    icon: Icon(Icons.edit, color: Colors.white,),
-                  ),
-                ),
-                // child: Text(
-                //   "Hehe boi",
-                //   style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w500),
-                // ),
-              ),
-              settingItem(
-                  content: "Dark Mode", icon: Icons.brightness_2_sharp, color: Colors.white30, switchVal: true),
-              settingItem(content: "Switch Account", icon: Icons.switch_account, color: Colors.purple),
-              settingItem(content: "Message Requests", icon: Icons.message, color: Colors.blue),
-              settingItem(content: "Log out", icon: Icons.logout, color: Colors.green, onPressed:()=>controller.logOut()),
-            ],
-          ),
-        ),
       ),
     );
   }

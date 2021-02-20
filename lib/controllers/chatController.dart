@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:quickmessage/controllers/homeController.dart';
 import 'package:quickmessage/models/message.dart';
@@ -13,17 +14,16 @@ class ChatController extends GetxController{
 
   ChatController(Room room){
     print("inti chat room" + room.toString());
-    // this.room.update((val) {
-    //   val.id = room.id;
-    //   val.userChatUid = room.userChatUid;
-    //   val.urlPicture = room.urlPicture;
-    //   val.name = room.name;
-    //   val.messages = room.messages;
-    // });
     this.room.value = room;
   }
 
-  pushMessage(String content) async {
+  void backToHome(){
+    Get.find<HomeController>().currentUser.update((val) { });
+    Get.back();
+  }
+
+  pushMessage(TextEditingController textEdit) async {
+    String content = textEdit.text;
     int time = DateTime.now().microsecondsSinceEpoch;
     print(time);
     await FirebaseFirestore.instance.collection("rooms").doc(room.value.id).collection("messages").add({
@@ -34,11 +34,10 @@ class ChatController extends GetxController{
       room.update((val) {
         val.messages.add(Message(content: content, time: time, uid: uid));
       }),
-      //Update homeScreen
-      Get.find<HomeController>().currentUser.update((val) { }),
+      textEdit.text = "",
     }).catchError((error) => {
       print('Failed to send message'+ error.toString()),
-      Get.snackbar("ERROR", "Failed to send message"),
+      Get.rawSnackbar(title: "ERROR", message: "Failed to send message", snackPosition: SnackPosition.TOP),
     });
   }
 

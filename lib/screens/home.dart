@@ -10,9 +10,9 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final HomeController controller = Get.put(HomeController());
     return Scaffold(
-      backgroundColor: Colors.black87,
-      appBar: AppBar(
-        backgroundColor: Colors.black87,
+      backgroundColor: Colors.black,
+      appBar:  AppBar(
+        backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
         title: getTitle(),
         leading: FlatButton(
@@ -22,12 +22,20 @@ class Home extends StatelessWidget {
           },
           child: Padding(
             padding: EdgeInsets.only(left: 18),
-            child: CircleAvatar(
-              radius: 18,
-              backgroundColor: Colors.transparent,
-              child: ClipOval(
-                child: Image.network(
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlNyI5Bbsl1vq1BQjH9XA-Z4j0Kkk0cEpAnA&usqp=CAU"),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(200),
+              // radius: 18,
+              // backgroundColor: Colors.transparent,
+              child: Obx(
+                () => controller.currentUser.value.urlPicture == null
+                    ? Container()
+                    : Image.network(
+                        // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlNyI5Bbsl1vq1BQjH9XA-Z4j0Kkk0cEpAnA&usqp=CAU"),
+                        controller.currentUser.value.urlPicture,
+                        height: 36,
+                        width: 36,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
           ),
@@ -111,8 +119,27 @@ class Home extends StatelessWidget {
   }
 }
 
-class Search extends SearchDelegate {
+
+class Search extends SearchDelegate<String> {
   HomeController controller = Get.find<HomeController>();
+
+  @override
+  String get searchFieldLabel => 'Search';
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    return ThemeData(
+      primaryColor: Colors.black,
+      hintColor: Colors.white,
+      inputDecorationTheme: InputDecorationTheme(hintStyle: TextStyle(color: Colors.white24),),
+      textTheme: TextTheme(
+        headline6: TextStyle(
+          color: Colors.white,
+          fontSize: 20.0,
+        ),
+      ),
+    );
+  }
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -131,17 +158,14 @@ class Search extends SearchDelegate {
     return IconButton(
       icon: Icon(Icons.arrow_back),
       onPressed: () {
-        Navigator.pop(context);
+        Get.back();
       },
     );
   }
 
-  String selectedResult;
-
   @override
   Widget buildResults(BuildContext context) {
     return Container(
-      child: Text(selectedResult),
     );
   }
 
@@ -151,19 +175,19 @@ class Search extends SearchDelegate {
   }
 
   Widget widgetListSuggestions(List<UserChat> suggestionList) {
-    return ListView.builder(
-      itemCount: suggestionList.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(suggestionList[index].name),
-          onTap: () async {
-            //Create and open room chat
-            controller.createOrOpenNewRoom(suggestionList[index]);
-            selectedResult = suggestionList[index].name;
-            //showResults(context);
-          },
-        );
-      },
+    return Container(
+      color: Colors.black,
+      child: ListView.builder(
+        itemCount: suggestionList.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(suggestionList[index].name, style: TextStyle(color: Colors.white),),
+            onTap: () async {
+              controller.createOrOpenNewRoom(suggestionList[index]);
+            },
+          );
+        },
+      ),
     );
   }
 }

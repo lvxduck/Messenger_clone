@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class BottomBarChat extends StatelessWidget {
   final onSubmit;
 
-  BottomBarChat({this.onSubmit});
+  BottomBarChat({this.onSubmit, this.controller});
+
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +23,9 @@ class BottomBarChat extends StatelessWidget {
               alignment: AlignmentDirectional.centerEnd,
               children: [
                 TextField(
+                    controller: controller,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none, borderRadius: BorderRadius.circular(30)),
+                      border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(30)),
                       fillColor: Colors.white10,
                       filled: true,
                       contentPadding: EdgeInsets.only(left: 10),
@@ -35,7 +37,11 @@ class BottomBarChat extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.only(right: 6),
                   child: GestureDetector(
-                      child: Icon(Icons.insert_emoticon_rounded, color: Colors.white, size: 24,)),
+                      child: Icon(
+                    Icons.insert_emoticon_rounded,
+                    color: Colors.white,
+                    size: 24,
+                  )),
                 ),
               ],
             ),

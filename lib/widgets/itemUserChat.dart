@@ -3,21 +3,13 @@ import 'package:flutter/rendering.dart';
 import 'package:quickmessage/models/room.dart';
 import 'package:intl/intl.dart';
 
-Widget itemUserChat(
-    {
-    // {name = 'Le Vinh Nhan Duc',
-    // urlPicture =
-    //     "https://firebasestorage.googleapis.com/v0/b/quickmessage-9e7be.appspot.com/o/image_profile%2Fpexels-photo-415829.jpeg?alt=media&token=034769d7-64ba-49e8-8d29-6f36219f5354",
-    // recentMessage = "Hello",
-    Room room,
-    onClick}) {
+Widget itemUserChat({Room room, onClick}) {
   String name = room.name;
   String urlPicture = room.urlPicture;
-  String recentMessage = room.messages == null ? "" : room.messages[room.messages.length - 1].content;
-  String time = room.messages == null
+  String recentMessage = room.messages.length == 0 ? "" : room.messages[room.messages.length - 1].content;
+  String time = room.messages.length == 0
       ? ""
-      : DateFormat.jm()
-          .format(DateTime.fromMicrosecondsSinceEpoch(room.messages[room.messages.length - 1].time));
+      : DateFormat.jm().format(DateTime.fromMicrosecondsSinceEpoch(room.messages[room.messages.length - 1].time));
 
   return FlatButton(
     padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
@@ -49,14 +41,14 @@ Widget itemUserChat(
                     children: [
                       Flexible(
                         child: Text(
-                          recentMessage+"   ",
+                          recentMessage + "   ",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(color: Colors.white70),
                         ),
                       ),
                       Text(
-                        time+"    ",
+                        time + "    ",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(color: Colors.white70),

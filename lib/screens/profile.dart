@@ -6,19 +6,32 @@ import 'package:get/get.dart';
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final ProfileController controller =
-        Get.put(ProfileController(Get.arguments));
+    final ProfileController controller = Get.put(ProfileController(Get.arguments));
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black87,
         actions: [
           PopupMenuButton<String>(
-            onSelected: (s) {},
+            onSelected: (s) {
+              switch (s) {
+                case 'Open chat head':
+                  {}
+                  break;
+                case 'Delete Conversation':
+                  {
+                    controller.deleteRoom();
+                  }
+                  break;
+                default:
+                  {
+                    print("hMMMM");
+                  }
+              }
+            },
             icon: Icon(Icons.more_vert),
             color: Colors.white,
             itemBuilder: (BuildContext context) {
-              return {'Open chat head', 'Delete Conversation'}
-                  .map((String choice) {
+              return {'Open chat head', 'Delete Conversation'}.map((String choice) {
                 return PopupMenuItem<String>(
                   value: choice,
                   child: Text(choice),
@@ -31,9 +44,9 @@ class Profile extends StatelessWidget {
       backgroundColor: Colors.black87,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 21),
+          //  padding: EdgeInsets.symmetric(horizontal: 21),
           child: Column(
-         //   crossAxisAlignment: CrossAxisAlignment.stretch,
+            //   crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Stack(
                 alignment: AlignmentDirectional.center,
@@ -42,19 +55,24 @@ class Profile extends StatelessWidget {
                     radius: 80,
                     backgroundColor: Colors.transparent,
                     backgroundImage: NetworkImage(controller.room.urlPicture),
-                    // backgroundImage: NetworkImage(
-                    //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlNyI5Bbsl1vq1BQjH9XA-Z4j0Kkk0cEpAnA&usqp=CAU",
-                    //     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 110, left: 110),
                     alignment: AlignmentDirectional.center,
-                    child: Icon(Icons.circle, color: Colors.black87,size: 46,),
+                    child: Icon(
+                      Icons.circle,
+                      color: Colors.black87,
+                      size: 46,
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 110, left: 110),
                     alignment: AlignmentDirectional.center,
-                    child: Icon(Icons.circle, color: Colors.green,size: 32,),
+                    child: Icon(
+                      Icons.circle,
+                      color: Colors.green,
+                      size: 32,
+                    ),
                   ),
                 ],
               ),
@@ -63,37 +81,19 @@ class Profile extends StatelessWidget {
                 height: 90,
                 child: Text(
                   controller.room.name,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.w500),
+                  style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.w500),
                 ),
               ),
-              itemProfile(
-                  content: "Theme",
-                  icon: Icons.color_lens,
-                  onPressed: () => controller.settingTheme()),
-              itemProfile(
-                  content: "Emoji",
-                  icon: Icons.emoji_emotions,
-                  onPressed: () => controller.settingEmoji()),
+              itemProfile(content: "Theme", icon: Icons.color_lens, onPressed: () => controller.settingTheme()),
+              itemProfile(content: "Emoji", icon: Icons.emoji_emotions, onPressed: () => controller.settingEmoji()),
               itemProfile(content: "Nicknames"),
-              Container(
-                  alignment: AlignmentDirectional.centerStart,
-                  height: 50,
-                  child: Text("More Actions",
-                      style: TextStyle(color: Colors.white54))),
+              leadText(content: "More Actions"),
               itemProfile(content: "View Photos & Videos", icon: Icons.image),
-              itemProfile(
-                  content: "Search in Conversation", icon: Icons.search),
-              Container(
-                  alignment: AlignmentDirectional.centerStart,
-                  height: 50,
-                  child:
-                      Text("Privacy", style: TextStyle(color: Colors.white54))),
+              itemProfile(content: "Search in Conversation", icon: Icons.search),
+              leadText(content: "Privacy"),
               itemProfile(content: "Notification", icon: Icons.search),
-              itemProfile(
-                  content: "Ignore Messages", icon: Icons.notifications_off),
+              itemProfile(content: "Ignore Messages", icon: Icons.notifications_off),
+              itemProfile(content: "Block", icon: Icons.block),
             ],
           ),
         ),
@@ -101,9 +101,21 @@ class Profile extends StatelessWidget {
     );
   }
 
-  Widget itemProfile({ String content, IconData icon, onPressed,}){
+  Widget leadText({String content}) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 21),
+      alignment: AlignmentDirectional.centerStart,
+      height: 50,
+      child: Text(
+        content,
+        style: TextStyle(color: Colors.white54),
+      ),
+    );
+  }
+
+  Widget itemProfile({String content, IconData icon, onPressed}) {
     return FlatButton(
-      padding: EdgeInsets.all(0),
+      padding: EdgeInsets.symmetric(horizontal: 21),
       onPressed: onPressed,
       splashColor: Colors.white12,
       height: 50,
@@ -114,11 +126,25 @@ class Profile extends StatelessWidget {
             content,
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
-          if(icon!=null)Icon(icon, color: Colors.white,size: 26,),
+          if (icon != null)
+            Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Icon(Icons.circle, color: Colors.white24, size: 38),
+                Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 20,
+                ),
+              ],
+            ),
+          // Icon(
+          //   icon,
+          //   color: Colors.white,
+          //   size: 26,
+          // ),
         ],
       ),
     );
   }
-
-
 }

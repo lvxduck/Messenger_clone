@@ -7,6 +7,9 @@ import 'package:quickmessage/widgets/listMessage.dart';
 import 'package:quickmessage/widgets/myLoading.dart';
 
 class Chat extends StatelessWidget {
+
+  TextEditingController textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final ChatController chatController = Get.put(ChatController(Get.arguments));
@@ -21,7 +24,7 @@ class Chat extends StatelessWidget {
             color: Colors.white,
           ),
           onPressed: () {
-            Get.back();
+            chatController.backToHome();
           },
         ),
         title: Text(chatController.room.value.name),
@@ -69,8 +72,9 @@ class Chat extends StatelessWidget {
             ),
             BottomBarChat(
               onSubmit: (content) {
-                chatController.pushMessage(content);
+                chatController.pushMessage(textEditingController);
               },
+              controller: textEditingController,
             ),
           ],
         ),

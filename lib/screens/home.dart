@@ -62,6 +62,7 @@ class Home extends StatelessWidget {
                             onClick: () {
                               controller.openChatRoom(index);
                             },
+                            index: index
                           );
                         },
                       ),

@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:quickmessage/models/room.dart';
 import 'package:intl/intl.dart';
 
-Widget itemUserChat({Room room, onClick}) {
+Widget itemUserChat({Room room, onClick,int index}) {
   String name = room.name;
   String urlPicture = room.urlPicture;
   String recentMessage = room.messages.length == 0 ? "" : room.messages[room.messages.length - 1].content;
@@ -44,7 +44,7 @@ Widget itemUserChat({Room room, onClick}) {
                           recentMessage + "   ",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.white70),
+                          style: TextStyle(color:index<3?Colors.white:Colors.white70),
                         ),
                       ),
                       Text(

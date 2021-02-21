@@ -31,7 +31,7 @@ class _MyLoadingState extends State<MyLoading> with SingleTickerProviderStateMix
         strokeWidth: 8,
         // backgroundColor: Colors.yellow,
         // valueColor: AlwaysStoppedAnimation(Colors.deepPurple),
-        valueColor: animationController.drive(ColorTween(begin: Colors.red, end: Colors.green)),
+        valueColor: animationController.drive(ColorTween(begin: Colors.red, end: Colors.lightBlue[700])),
       ),
     );
   }

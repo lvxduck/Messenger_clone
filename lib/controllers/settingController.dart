@@ -10,6 +10,7 @@ import 'package:quickmessage/models/user.dart';
 import 'package:quickmessage/screens/login.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:quickmessage/screens/splash.dart';
 
 class SettingController extends GetxController {
   CurrentUser currentUser;
@@ -21,7 +22,7 @@ class SettingController extends GetxController {
 
   SettingController(currentUser) {
     print('Init SettingController');
-    print(currentUser.toString());
+    // print(currentUser.toString());
     this.currentUser = currentUser;
   }
 
@@ -92,10 +93,14 @@ class SettingController extends GetxController {
             ),
           ),
           FlatButton(
-            onPressed: () {
+            onPressed: () async {
               // Get.reset();
               // Get.to(Login());
-              Get.offAll(Login());
+             // FirebaseAuth.instance.currentUser.delete();
+              // await FirebaseAuth.instance.signOut().then((value) => {
+               // Get.offAll(Splash());
+                Get.offAll(Login());
+              // });
             },
             child: Text(
               "Yes",
@@ -119,17 +124,4 @@ class SettingController extends GetxController {
       print('No image selected.');
     }
   }
-
-// Future<void> uploadFile(String filePath) async {
-//   File file = File(filePath);
-//
-//   try {
-//     await firebase_storage.FirebaseStorage.instance
-//         .ref('image_profile/${currentUser.uid}.png')
-//         .putFile(file);
-//   } catch (e) {
-//     // e.g, e.code == 'canceled'
-//     print(e.toString());
-//   }
-// }
 }

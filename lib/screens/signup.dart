@@ -27,26 +27,58 @@ class SignUp extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Hi,",style: TextStyle(color: Colors.lightBlue[700], fontSize: 32,fontWeight: FontWeight.bold)),
-                  Text("Signup to connect your friends",style: TextStyle(color: Colors.white),),
-                  Padding(padding: EdgeInsets.only(top: 40)),
+                  Stack(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    children: [
+                      GetBuilder<SignUpController>(
+                        builder: (_) => ClipRRect(
+                          borderRadius: BorderRadius.circular(200),
+                          child: _.image == null
+                              ? Image.network(
+                            "https://firebasestorage.googleapis.com/v0/b/quickmessage-9e7be.appspot.com/o/default_avatars%2Fno_avatar.png?alt=media&token=fce0b40e-da3f-4bc1-8bd8-2549676b1836",
+                            height: 120,
+                            width: 120,
+                            fit: BoxFit.cover,
+                          )
+                              : Image.file(
+                            _.image,
+                            height: 120,
+                            width: 120,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      FlatButton(
+                        padding: EdgeInsets.all(0),
+                        onPressed: () {
+                          controller.selectAvatarFrGallery();
+                        },
+                        child: Container(
+                          width: 120,
+                          margin: EdgeInsets.only(top: 20),
+                          height: 30,
+                          color: Colors.black38,
+                          child: Icon(
+                            Icons.photo_camera,
+                            color: Colors.white70,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 32)),
                   myTextField(userNameController, "UserName"),
                   Padding(padding: EdgeInsets.only(top: 16)),
                   myTextField(emailController, "Email"),
                   Padding(padding: EdgeInsets.only(top: 16)),
                   myTextField(passwordController, "Password"),
-                  Padding(padding: EdgeInsets.only(top: 32)),
+                  Padding(padding: EdgeInsets.only(top: 40)),
                   myFlatButton(
                     onPressed: () {
                       controller.signUp(userNameController.text, emailController.text, passwordController.text);
                     },
                     content: "CREATE NEW ACCOUNT",
                   ),
-                  // RaisedButton(
-                  //     child: Text("CREATE NEW ACCOUNT"),
-                  //     onPressed: () {
-                  //       controller.signUp(userNameController.text, emailController.text, passwordController.text);
-                  //     }),
                 ],
               ),
               Obx(() => controller.isSignUp.value ? MyLoading() : Container()),

@@ -8,14 +8,6 @@ class LoginController extends GetxController{
 
   @override
   onInit(){
-    // FirebaseAuth.instance.authStateChanges().listen((User user) {
-    //   if (user == null) {
-    //     print('User is currently signed out!');
-    //   } else {
-    //     print('User is signed in!');
-    //     Get.to(Home());
-    //   }
-    // });
     super.onInit();
   }
 

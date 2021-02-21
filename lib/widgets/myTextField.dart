@@ -12,7 +12,7 @@ Widget myTextField(TextEditingController controller,String hintText){
       fillColor: Colors.white10,
       filled: true,
       contentPadding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-      hintStyle: TextStyle(fontSize: 18, color: Colors.white),
+      hintStyle: TextStyle(fontSize: 18, color: Colors.white54),
       hintText: hintText,
     ),
   );

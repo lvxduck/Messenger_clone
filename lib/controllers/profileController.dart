@@ -23,6 +23,7 @@ class ProfileController extends GetxController {
   void deleteRoom() async {
     print("Delete room");
     isLoading = true;
+    update();
 
     ///Delete userChat room
     await FirebaseFirestore.instance

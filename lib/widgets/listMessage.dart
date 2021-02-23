@@ -8,8 +8,9 @@ class ListMessage extends StatelessWidget {
   final String userChatUid;
   final String userChatUrlPicture;
   final List<Message> messages;
+  final bool isDarkMode;
 
-  ListMessage(this.messages, this.currentUserUid, this.userChatUid, this.userChatUrlPicture);
+  ListMessage(this.messages, this.currentUserUid, this.userChatUid, this.userChatUrlPicture, this.isDarkMode);
 
   final ScrollController _scrollController = new ScrollController();
 
@@ -31,12 +32,12 @@ class ListMessage extends StatelessWidget {
                   messageBorderType = calculateBorderTypeRight(messageType, index);
                   messageType = MessageType.Right;
                   return ItemMessage(
-                      messages[index].content, messageType, messageBorderType, userChatUrlPicture);
+                      messages[index].content, messageType, messageBorderType, userChatUrlPicture, isDarkMode);
                 } else {
                   messageBorderType = calculateBorderTypeLeft(messageType, index);
                   messageType = MessageType.Left;
                   return ItemMessage(
-                      messages[index].content, messageType, messageBorderType, userChatUrlPicture);
+                      messages[index].content, messageType, messageBorderType, userChatUrlPicture, isDarkMode);
                 }
               },
             )

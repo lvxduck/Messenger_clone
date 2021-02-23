@@ -86,9 +86,10 @@ class HomeController extends GetxController {
             currentUser.update((val) {});
 
             ///Notification
-            if (messages[messages.length - 1].uid != currentUser.value.uid)
+            if (messages[messages.length - 1].uid != currentUser.value.uid){
               _myNotification.displayNotification('New message', messages[messages.length - 1].content, room, i);
-            sortingRoom();
+              sortingRoom();
+            }
           }
         });
       }

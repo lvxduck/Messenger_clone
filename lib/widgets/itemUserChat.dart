@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:quickmessage/models/room.dart';
 import 'package:intl/intl.dart';
 
-Widget itemUserChat({Room room, onClick,int index}) {
+Widget itemUserChat({Room room, onClick, int index, bool isDarkMode}) {
   String name = room.name;
   String urlPicture = room.urlPicture;
   String recentMessage = room.messages.length == 0 ? "" : room.messages[room.messages.length - 1].content;
@@ -14,7 +14,7 @@ Widget itemUserChat({Room room, onClick,int index}) {
   return FlatButton(
     padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
     onPressed: onClick,
-    splashColor: Colors.white10,
+    splashColor: isDarkMode?Colors.white10:Colors.black12,
     child: Container(
       height: 60,
       padding: EdgeInsets.only(top: 4),
@@ -24,7 +24,7 @@ Widget itemUserChat({Room room, onClick,int index}) {
           CircleAvatar(
             radius: 30,
             backgroundImage: NetworkImage(urlPicture),
-            backgroundColor: Colors.white24,
+            backgroundColor: isDarkMode?Colors.white24:Colors.black26,
           ),
           Expanded(
             child: Container(
@@ -35,7 +35,7 @@ Widget itemUserChat({Room room, onClick,int index}) {
                 children: [
                   Text(
                     name,
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    style: TextStyle(fontSize: 18, color: isDarkMode?Colors.white:Colors.black),
                   ),
                   Row(
                     children: [
@@ -44,14 +44,15 @@ Widget itemUserChat({Room room, onClick,int index}) {
                           recentMessage + "   ",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color:index<3?Colors.white:Colors.white70),
+                          style: isDarkMode?TextStyle(color: index < 3 ? Colors.white : Colors.white70)
+                          :TextStyle(color: index < 3 ? Colors.black : Colors.black54),
                         ),
                       ),
                       Text(
                         time + "    ",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.white70),
+                        style: TextStyle(color: isDarkMode?Colors.white70:Colors.black87),
                       ),
                     ],
                   ),
@@ -65,12 +66,11 @@ Widget itemUserChat({Room room, onClick,int index}) {
   );
 }
 
-Widget itemUserChatForSearch({String name, String urlPicture, bool isConnected, onClick}) {
-
+Widget itemUserChatForSearch({String name, String urlPicture, bool isConnected, onClick, isDarkMode}) {
   return FlatButton(
     padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
     onPressed: onClick,
-    splashColor: Colors.white10,
+    splashColor: isDarkMode?Colors.white10:Colors.black12,
     child: Container(
       height: 50,
       padding: EdgeInsets.only(top: 4),
@@ -80,7 +80,7 @@ Widget itemUserChatForSearch({String name, String urlPicture, bool isConnected, 
           CircleAvatar(
             radius: 30,
             backgroundImage: NetworkImage(urlPicture),
-            backgroundColor: Colors.red,
+            backgroundColor: isDarkMode?Colors.white24:Colors.black26,
           ),
           Expanded(
             child: Container(
@@ -91,14 +91,14 @@ Widget itemUserChatForSearch({String name, String urlPicture, bool isConnected, 
                 children: [
                   Text(
                     name,
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    style: TextStyle(fontSize: 18, color: isDarkMode?Colors.white:Colors.black),
                   ),
                   Flexible(
                     child: Text(
-                      isConnected?"Connected":"",
+                      isConnected ? "Connected" : "",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.white70),
+                      style: TextStyle(color: isDarkMode?Colors.white70:Colors.black54),
                     ),
                   ),
                 ],

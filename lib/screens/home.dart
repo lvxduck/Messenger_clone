@@ -3,18 +3,23 @@ import 'package:get/get.dart';
 import 'package:quickmessage/controllers/homeController.dart';
 import 'package:quickmessage/models/room.dart';
 import 'package:quickmessage/models/user.dart';
+import 'package:quickmessage/utils/myTheme.dart';
 import 'package:quickmessage/widgets/itemUserChat.dart';
 
 class Home extends StatelessWidget {
+
+  final HomeController controller = Get.put(HomeController());
+  final myTheme = Get.find<MyTheme>();
+
   @override
   Widget build(BuildContext context) {
-    final HomeController controller = Get.put(HomeController());
-    return Scaffold(
-      backgroundColor: Colors.black,
+    return GetBuilder<MyTheme>(builder: (myTheme)=>Scaffold(
+      backgroundColor: myTheme.primaryColor,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: myTheme.primaryColor,
         automaticallyImplyLeading: false,
         title: getTitle(),
+        elevation: 0,
         leading: FlatButton(
           padding: EdgeInsets.all(0),
           onPressed: () {
@@ -24,13 +29,10 @@ class Home extends StatelessWidget {
             padding: EdgeInsets.only(left: 18),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(200),
-              // radius: 18,
-              // backgroundColor: Colors.transparent,
               child: Obx(
                 () => controller.currentUser.value.urlPicture == null
                     ? Container()
                     : Image.network(
-                        // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlNyI5Bbsl1vq1BQjH9XA-Z4j0Kkk0cEpAnA&usqp=CAU"),
                         controller.currentUser.value.urlPicture,
                         height: 36,
                         width: 36,
@@ -58,12 +60,12 @@ class Home extends StatelessWidget {
                         itemBuilder: (context, index) {
                           Room room = controller.currentUser.value.rooms[index];
                           return itemUserChat(
-                            room: room,
-                            onClick: () {
-                              controller.openChatRoom(index);
-                            },
-                            index: index
-                          );
+                              room: room,
+                              onClick: () {
+                                controller.openChatRoom(index);
+                              },
+                              index: index,
+                          isDarkMode: myTheme.theme==ThemeMode.dark);
                         },
                       ),
               ),
@@ -71,7 +73,7 @@ class Home extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ),);
   }
 
   Widget getTitle() {
@@ -80,11 +82,11 @@ class Home extends StatelessWidget {
       () => controller.currentUser.value.name == null
           ? Text(
               "Loading",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: myTheme.textColor),
             )
           : Text(
               controller.currentUser.value.name,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: myTheme.textColor),
             ),
     );
   }
@@ -101,17 +103,17 @@ class Home extends StatelessWidget {
           children: [
             Icon(
               Icons.search,
-              color: Colors.white30,
+              color: myTheme.hintTextColor,
               size: 24,
             ),
             Padding(padding: EdgeInsets.only(left: 10)),
             Text(
               "Search",
-              style: TextStyle(color: Colors.white54, fontSize: 16),
+              style: TextStyle(color: myTheme.hintTextColor, fontSize: 16),
             )
           ],
         ),
-        color: Colors.white12,
+        color: myTheme.textFieldColor,
         shape: new RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(30.0),
         ),
@@ -122,6 +124,7 @@ class Home extends StatelessWidget {
 
 class Search extends SearchDelegate<String> {
   HomeController controller = Get.find<HomeController>();
+  MyTheme myTheme = Get.find<MyTheme>();
 
   @override
   String get searchFieldLabel => 'Search';
@@ -129,14 +132,14 @@ class Search extends SearchDelegate<String> {
   @override
   ThemeData appBarTheme(BuildContext context) {
     return ThemeData(
-      primaryColor: Colors.black,
-      hintColor: Colors.white,
+      primaryColor: myTheme.primaryColor,
+      // hintColor: Colors.white,
       inputDecorationTheme: InputDecorationTheme(
-        hintStyle: TextStyle(color: Colors.white24),
+        hintStyle: TextStyle(color: myTheme.hintTextColor),
       ),
       textTheme: TextTheme(
         headline6: TextStyle(
-          color: Colors.white,
+          color: myTheme.textColor,
           fontSize: 20.0,
         ),
       ),
@@ -177,7 +180,7 @@ class Search extends SearchDelegate<String> {
 
   Widget widgetListSuggestions(List<UserChat> suggestionList) {
     return Container(
-      color: Colors.black,
+      color: myTheme.primaryColor,
       child: ListView.builder(
         itemCount: suggestionList.length,
         itemBuilder: (context, index) {
@@ -185,9 +188,10 @@ class Search extends SearchDelegate<String> {
             name: suggestionList[index].name,
             urlPicture: suggestionList[index].urlPicture,
             isConnected: true,
-            onClick: (){
+            onClick: () {
               controller.createOrOpenNewRoom(suggestionList[index]);
             },
+            isDarkMode: myTheme.theme==ThemeMode.dark,
           );
         },
       ),

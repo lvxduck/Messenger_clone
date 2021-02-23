@@ -9,8 +9,9 @@ class ItemMessage extends StatelessWidget {
   final String urlPicture;
   final MessageType messageType;
   final MessageBorderType messageBorderType;
+  final bool isDarkMode;
 
-  ItemMessage(this.content, this.messageType, this.messageBorderType, this.urlPicture);
+  ItemMessage(this.content, this.messageType, this.messageBorderType, this.urlPicture, this.isDarkMode);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class ItemMessage extends StatelessWidget {
                 ? CircleAvatar(
                     radius: 14,
                     backgroundImage: NetworkImage(urlPicture),
-                    backgroundColor: Colors.red,
+                    backgroundColor: isDarkMode?Colors.white54:Colors.black54,
                   )
                 : Padding(padding: EdgeInsets.only(left: 28)),
             ConstrainedBox(
@@ -47,13 +48,13 @@ class ItemMessage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                 decoration: BoxDecoration(
                   borderRadius: generateBorder(messageBorderType, messageType),
-                  color: Colors.white10,
+                  color: isDarkMode?Colors.white10:Colors.black12,
                 ),
                 child: Text(
                   content,
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.white,
+                    color: isDarkMode?Colors.white:Colors.black,
                   ),
                 ),
               ),
@@ -74,7 +75,7 @@ class ItemMessage extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
           decoration: BoxDecoration(
             borderRadius: generateBorder(messageBorderType, messageType),
-            color: Colors.deepPurple,
+            color: Colors.blue[700],
           ),
           child: Text(
             content,

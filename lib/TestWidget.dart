@@ -8,9 +8,10 @@ class TestNotification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GetBuilder<MyTheme>(
-        builder: (_) => Container(
+    return GetBuilder<MyTheme>(
+      builder: (_) => Scaffold(
+        backgroundColor: _.primaryColor,
+        body: Container(
           alignment: AlignmentDirectional.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -19,7 +20,8 @@ class TestNotification extends StatelessWidget {
               FlatButton(
                 onPressed: () {
                   print("press");
-                  _.initThemeData(ThemeMode.dark);
+                  _.switchTheme();
+                  // _.initThemeData(ThemeMode.dark);
                 },
                 color: _.buttonColor,
                 child: Text("notifi"),

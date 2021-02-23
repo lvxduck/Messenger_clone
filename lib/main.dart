@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      // home: Splash(),
-      home: TestNotification(),
+      home: Splash(),
+      // home: TestNotification(),
     );
   }
 }

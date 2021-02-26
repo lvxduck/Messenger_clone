@@ -19,7 +19,8 @@ class Profile extends StatelessWidget {
           title: Text("Profile", style: TextStyle(color: myTheme.textColor),),
           automaticallyImplyLeading: false,
           leading: FlatButton(
-            child: Icon(
+              highlightColor: myTheme.primaryColor,
+              child: Icon(
               Icons.arrow_back,
               color: myTheme.textColor,
             ),
@@ -45,13 +46,13 @@ class Profile extends StatelessWidget {
                     }
                 }
               },
-              icon: Icon(Icons.more_vert),
-              color: myTheme.textColor,
+              icon: Icon(Icons.more_vert, color: myTheme.textColor,),
+              color: Colors.white,
               itemBuilder: (BuildContext context) {
                 return {'Open chat head', 'Delete Conversation'}.map((String choice) {
                   return PopupMenuItem<String>(
                     value: choice,
-                    child: Text(choice),
+                    child: Text(choice, style: TextStyle(color: Colors.black),),
                   );
                 }).toList();
               },
@@ -154,11 +155,6 @@ class Profile extends StatelessWidget {
                 ),
               ],
             ),
-          // Icon(
-          //   icon,
-          //   color: Colors.white,
-          //   size: 26,
-          // ),
         ],
       ),
     );

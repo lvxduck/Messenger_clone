@@ -42,7 +42,7 @@ class BottomBarChat extends StatelessWidget {
                       border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(30)),
                       fillColor: isDarkMode?Colors.white10:Colors.black12,
                       filled: true,
-                      contentPadding: EdgeInsets.only(left: 10),
+                      contentPadding: EdgeInsets.only(left: 10, right: 20),
                       hintStyle: TextStyle(fontSize: 18,color: isDarkMode?Colors.white:Colors.black),
                       hintText: "Aa",
                     ),
@@ -62,7 +62,9 @@ class BottomBarChat extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(Icons.send, color: isDarkMode?Colors.white:Colors.black),
-            onPressed: () {},
+            onPressed: (){
+              onSubmit("oke");
+            },
           ),
         ],
       ),

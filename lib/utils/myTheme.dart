@@ -45,7 +45,7 @@ class MyTheme extends GetxController {
   }
 
   MyTheme() {
-    // theme = ThemeMode.DarkMode;
+    theme = ThemeMode.dark;
     print("init myTheme");
     init();
 
@@ -72,6 +72,7 @@ class MyTheme extends GetxController {
     } else {
       theme = ThemeMode.dark;
     }
+    update();
     print("Init theme: " + theme.toString());
     _initThemeData(theme);
   }

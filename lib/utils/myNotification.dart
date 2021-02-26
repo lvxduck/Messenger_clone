@@ -6,7 +6,7 @@ import 'package:quickmessage/screens/chat.dart';
 
 class MyNotification {
   FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  AndroidInitializationSettings _initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
+  AndroidInitializationSettings _initializationSettingsAndroid = AndroidInitializationSettings('app_icon2');
 
   MyNotification() {
     _initNotification();
@@ -27,7 +27,7 @@ class MyNotification {
     _room = room;
     _index = index;
     _initNotification();
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(milliseconds: 200));
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails('your channel id', 'your channel name', 'your channel description',
             importance: Importance.max,

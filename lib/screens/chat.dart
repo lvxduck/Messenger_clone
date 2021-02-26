@@ -28,7 +28,7 @@ class Chat extends StatelessWidget {
               chatController.backToHome();
             },
           ),
-          elevation: 0,
+          // elevation: 0,
           title: Text(
             chatController.room.value.name,
             style: TextStyle(color: myTheme.textColor),

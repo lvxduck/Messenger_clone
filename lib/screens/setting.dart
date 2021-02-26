@@ -20,6 +20,7 @@ class Setting extends StatelessWidget {
           title: Text("Me", style: TextStyle(color: myTheme.textColor),),
           automaticallyImplyLeading: false,
           leading: FlatButton(
+            highlightColor: myTheme.primaryColor,
             child: Icon(
               Icons.arrow_back,
               color: myTheme.textColor,
@@ -73,7 +74,7 @@ class Setting extends StatelessWidget {
                                     color: myTheme.primaryOverlayColor,
                                     child: Icon(
                                       Icons.photo_camera,
-                                      color: Colors.white70,
+                                      color: Colors.grey,
                                     ),
                                   ),
                                 )

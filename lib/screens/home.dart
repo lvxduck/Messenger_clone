@@ -8,11 +8,12 @@ import 'package:quickmessage/widgets/itemUserChat.dart';
 
 class Home extends StatelessWidget {
 
-  final HomeController controller = Get.put(HomeController());
   final myTheme = Get.find<MyTheme>();
 
   @override
   Widget build(BuildContext context) {
+    final HomeController controller = Get.put(HomeController());
+
     return GetBuilder<MyTheme>(builder: (myTheme)=>Scaffold(
       backgroundColor: myTheme.primaryColor,
       appBar: AppBar(
@@ -21,6 +22,7 @@ class Home extends StatelessWidget {
         title: getTitle(),
         elevation: 0,
         leading: FlatButton(
+          highlightColor: myTheme.primaryColor,
           padding: EdgeInsets.all(0),
           onPressed: () {
             controller.openSetting();

@@ -54,17 +54,24 @@ class HomeController extends GetxController {
 
   void _getCurrentUser() async {
     /// Get room information, store in user collection
-    List<Room> rooms = [];
-    await FirebaseFirestore.instance
+    FirebaseFirestore.instance
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser.uid)
         .collection('rooms')
-        .get()
-        .then((snapshot) {
+    .snapshots().listen((snapshot) async{
+      List<Room> rooms = [];
+      isFirstGetMessageData = true;
+
       snapshot.docs.forEach((doc) {
         print(doc['id']);
         rooms.add(Room(id: doc['id'], name: doc['name'], urlPicture: doc['picture'], userChatUid: doc['userChatUid']));
       });
+      //   .get()
+      //   .then((snapshot) {
+      // snapshot.docs.forEach((doc) {
+      //   print(doc['id']);
+      //   rooms.add(Room(id: doc['id'], name: doc['name'], urlPicture: doc['picture'], userChatUid: doc['userChatUid']));
+      // });
 
       /// Get room message, store in room collection
       for (int i = 0; i < rooms.length; i++) {
@@ -82,25 +89,28 @@ class HomeController extends GetxController {
             messages.add(Message(content: messageDoc['content'], time: messageDoc['time'], uid: messageDoc['uid']));
           });
           room.messages = messages;
+
           if (!isFirstGetMessageData) {
             currentUser.update((val) {});
-
             ///Notification
-            if (messages[messages.length - 1].uid != currentUser.value.uid){
-              _myNotification.displayNotification('New message', messages[messages.length - 1].content, room, i);
+            if (messages[messages.length - 1].uid != currentUser.value.uid) {
+              _myNotification.displayNotification(room.name, messages[messages.length - 1].content, room, i);
               sortingRoom();
             }
           }
+
         });
       }
+      currentUser.update((val) {
+        val.rooms = rooms;
+      });
+      await Future.delayed(Duration(seconds: 2));
+      isFirstGetMessageData = false;
+      print("Start sorting room");
+      sortingRoom();
     });
-    currentUser.update((val) {
-      val.rooms = rooms;
-    });
-    await Future.delayed(Duration(seconds: 1));
-    isFirstGetMessageData = false;
-    print("Start sorting room");
-    sortingRoom();
+
+
   }
 
   void hardReload() async {
@@ -207,11 +217,10 @@ class HomeController extends GetxController {
   void sortingRoom() {
     print("sortingRoom");
     List<Room> rooms = currentUser.value.rooms;
-    rooms
-        .sort((b, a){
-          if(a.messages.length==0) return -1;
-          if(b.messages.length==0) return 1;
-          return a.messages[a.messages.length - 1].time.compareTo(b.messages[b.messages.length - 1].time);
+    rooms.sort((b, a) {
+      if (a.messages.length == 0) return -1;
+      if (b.messages.length == 0) return 1;
+      return a.messages[a.messages.length - 1].time.compareTo(b.messages[b.messages.length - 1].time);
     });
     print("after sorting");
     currentUser.update((val) {

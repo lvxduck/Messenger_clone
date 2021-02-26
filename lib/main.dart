@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:quickmessage/screens/splash.dart';
 import 'package:quickmessage/utils/myTheme.dart';
@@ -16,10 +17,19 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
+  final MyTheme myTheme = Get.put(MyTheme());
+
   @override
   Widget build(BuildContext context) {
     ///Init themeData
-    Get.put(MyTheme());
+
+
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   statusBarColor: myTheme.primaryColor,
+    //   statusBarIconBrightness: myTheme.theme==ThemeMode.dark?Brightness.light:Brightness.dark,
+    //   statusBarBrightness: myTheme.theme==ThemeMode.dark?Brightness.light:Brightness.dark,
+    // ));
 
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,

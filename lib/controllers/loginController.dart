@@ -27,6 +27,9 @@ class LoginController extends GetxController{
       } else if (e.code == 'wrong-password') {
         Get.snackbar('Hi','Wrong password provided for that user');
         print('Wrong password provided for that user.');
+      }else{
+        Get.snackbar('Hi'+email,e.toString());
+        print('Error'+e.toString());
       }
     }
     isLogin.value = false;

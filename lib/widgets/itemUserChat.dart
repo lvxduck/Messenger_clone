@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:quickmessage/models/room.dart';
@@ -14,17 +15,23 @@ Widget itemUserChat({Room room, onClick, int index, bool isDarkMode}) {
   return FlatButton(
     padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
     onPressed: onClick,
-    splashColor: isDarkMode?Colors.white10:Colors.black12,
+    splashColor: isDarkMode ? Colors.white10 : Colors.black12,
     child: Container(
       height: 60,
       padding: EdgeInsets.only(top: 4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundImage: NetworkImage(urlPicture),
-            backgroundColor: isDarkMode?Colors.white24:Colors.black26,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(200),
+            child: CachedNetworkImage(
+              imageUrl: urlPicture,
+              //placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+              height: 60,
+              width: 56,
+              fit: BoxFit.cover,
+            ),
           ),
           Expanded(
             child: Container(
@@ -35,7 +42,7 @@ Widget itemUserChat({Room room, onClick, int index, bool isDarkMode}) {
                 children: [
                   Text(
                     name,
-                    style: TextStyle(fontSize: 18, color: isDarkMode?Colors.white:Colors.black),
+                    style: TextStyle(fontSize: 18, color: isDarkMode ? Colors.white : Colors.black),
                   ),
                   Row(
                     children: [
@@ -44,15 +51,16 @@ Widget itemUserChat({Room room, onClick, int index, bool isDarkMode}) {
                           recentMessage + "   ",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: isDarkMode?TextStyle(color: index < 3 ? Colors.white : Colors.white70)
-                          :TextStyle(color: index < 3 ? Colors.black : Colors.black54),
+                          style: isDarkMode
+                              ? TextStyle(color: index < 3 ? Colors.white : Colors.white70)
+                              : TextStyle(color: index < 3 ? Colors.black : Colors.black54),
                         ),
                       ),
                       Text(
                         time + "    ",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: isDarkMode?Colors.white70:Colors.black87),
+                        style: TextStyle(color: isDarkMode ? Colors.white70 : Colors.black87),
                       ),
                     ],
                   ),
@@ -70,17 +78,30 @@ Widget itemUserChatForSearch({String name, String urlPicture, bool isConnected, 
   return FlatButton(
     padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
     onPressed: onClick,
-    splashColor: isDarkMode?Colors.white10:Colors.black12,
+    splashColor: isDarkMode ? Colors.white10 : Colors.black12,
     child: Container(
       height: 50,
       padding: EdgeInsets.only(top: 4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundImage: NetworkImage(urlPicture),
-            backgroundColor: isDarkMode?Colors.white24:Colors.black26,
+          // CircleAvatar(
+          //   radius: 30,
+          //   backgroundImage: NetworkImage(
+          //     urlPicture,
+          //   ),
+          //   backgroundColor: isDarkMode ? Colors.white24 : Colors.black26,
+          // ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(200),
+            child: CachedNetworkImage(
+              imageUrl: urlPicture,
+            //  placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+              height: 50,
+              width: 46,
+              fit: BoxFit.cover,
+            ),
           ),
           Expanded(
             child: Container(
@@ -91,14 +112,14 @@ Widget itemUserChatForSearch({String name, String urlPicture, bool isConnected, 
                 children: [
                   Text(
                     name,
-                    style: TextStyle(fontSize: 18, color: isDarkMode?Colors.white:Colors.black),
+                    style: TextStyle(fontSize: 18, color: isDarkMode ? Colors.white : Colors.black),
                   ),
                   Flexible(
                     child: Text(
                       isConnected ? "Connected" : "",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: isDarkMode?Colors.white70:Colors.black54),
+                      style: TextStyle(color: isDarkMode ? Colors.white70 : Colors.black54),
                     ),
                   ),
                 ],

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-Widget myTextField(TextEditingController controller,String hintText){
+Widget myTextField(TextEditingController controller,String hintText, bool isDarkMode){
   return TextField(
     controller: controller,
-    style: TextStyle(fontSize: 18, color: Colors.white),
+    style: TextStyle(fontSize: 18, color: isDarkMode?Colors.white:Colors.black),
     decoration: InputDecoration(
       border: OutlineInputBorder(
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(80)),
       isDense: true,
-      fillColor: Colors.white10,
+      fillColor: isDarkMode?Colors.white10:Colors.black12,
       filled: true,
       contentPadding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-      hintStyle: TextStyle(fontSize: 18, color: Colors.white54),
+      hintStyle: TextStyle(fontSize: 18, color: isDarkMode?Colors.white54:Colors.black54),
       hintText: hintText,
     ),
   );

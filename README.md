@@ -1,21 +1,5 @@
-# quickmessage
-
-A new Flutter application.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
 <h1>Quick Message</h1>
+
 <ul>
   <li>Authenticate: firebase_auth</li>
   <li>Stream messenging: clound_firestore</li>
@@ -24,6 +8,12 @@ samples, guidance on mobile development, and a full API reference.
   <li>State management: GetX</li>
   <li>Dark mode</li>
  </ul>
+ 
+ <h2>Youtube Video</h2>
+ 
+[![Watch the video](https://i.ibb.co/qBQsjnB/Clone-Messenger-App-with-Flutter-Firebase-You-Tube-Google-Chrome-2-26-2021-9-59-22-PM.png)](https://www.youtube.com/watch?v=Py2lCqrZO9c)
+ 
+
  <h2>DarkMode</h2>
  <div style="display: flex;flex-wrap: wrap">
   <img src="https://i.ibb.co/j5c7bKV/9cdae6387412874cde03.jpg" alt="9cdae6387412874cde03" width=30%>
